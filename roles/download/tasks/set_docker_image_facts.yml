@@ -9,7 +9,7 @@
 
 - name: Register docker images info
   shell: >-
-    {{ docker_bin_dir }}/docker images -q | xargs {{ docker_bin_dir }}/docker inspect -f "{{ '{{' }} if .RepoTags {{ '}}' }}{{ '{{' }} (index .RepoTags 0) {{ '}}' }}{{ '{{' }} end {{ '}}' }}{{ '{{' }} if .RepoDigests {{ '}}' }},{{ '{{' }} (index .RepoDigests 0) {{ '}}' }}{{ '{{' }} end {{ '}}' }}" | tr '\n' ','
+    {{ docker_bin_dir }}/docker images -q | xargs {{ docker_bin_dir }}/docker inspect -f {%raw%}"{{ if .RepoTags }}{{ (index .RepoTags 0) }}{{ end }}{{ if .RepoDigests }},{{ (index .RepoDigests 0) }}{{ end }}"{%endraw%} | tr '\n' ','
   no_log: false
   register: docker_images
   failed_when: false
