@@ -17,10 +17,6 @@
   check_mode: no
   when: not download_always_pull
 
-- debug:
-    var: item
-  with_items: "{{ docker_images.stdout.split(',') }}"
-
 - set_fact:
     pull_required: >-
       {%- if pull_args in docker_images.stdout.split(',') %}false{%- else -%}true{%- endif -%}
